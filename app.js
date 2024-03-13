@@ -1,6 +1,10 @@
 const { ipcRenderer } = require('electron');
 
-ipcRenderer.on('updateQrCode', (event, qrCode) => {
-    const qrcodeContainer = document.getElementById('qrcode-container');
-    qrcodeContainer.innerHTML = `<img src="${qrCode}" alt="QR Code">`;
+// Listen for the 'updateQrCode' event from the main process
+ipcRenderer.on('updateQrCode', (event, qrCodeData) => {
+    // Update the QR code in the HTML
+    document.getElementById('qrcode').innerHTML = `<img src="${qrCodeData}" alt="QR Code" />`;
 });
+
+// Request QR code from the main process
+ipcRenderer.send('getQrCode');
